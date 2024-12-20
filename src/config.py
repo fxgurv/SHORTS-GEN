@@ -1,143 +1,187 @@
 import os
 import sys
 import json
-import srt_equalizer
 
 from termcolor import colored
 
 ROOT_DIR = os.path.dirname(sys.path[0])
 
 def assert_folder_structure() -> None:
+    """Ensure the .mp folder exists."""
     if not os.path.exists(os.path.join(ROOT_DIR, ".mp")):
         if get_verbose():
             print(colored(f"=> Creating .mp folder at {os.path.join(ROOT_DIR, '.mp')}", "green"))
         os.makedirs(os.path.join(ROOT_DIR, ".mp"))
 
 def get_first_time_running() -> bool:
+    """Check if this is the first time the application is running."""
     return not os.path.exists(os.path.join(ROOT_DIR, ".mp"))
 
-def get_email_credentials() -> dict:
-    with open(os.path.join(ROOT_DIR, "config.json"), "r") as file:
-        return json.load(file)["email"]
-
+# General Configuration
 def get_verbose() -> bool:
+    """Get the verbose setting."""
     with open(os.path.join(ROOT_DIR, "config.json"), "r") as file:
         return json.load(file)["verbose"]
 
 def get_browser() -> str:
+    """Get the browser setting."""
     with open(os.path.join(ROOT_DIR, "config.json"), "r") as file:
         return json.load(file)["browser"]
 
-def get_browser_profile_path() -> str:
-    with open(os.path.join(ROOT_DIR, "config.json"), "r") as file:
-        return json.load(file)["profile_path"]
-
 def get_headless() -> bool:
+    """Get the headless setting."""
     with open(os.path.join(ROOT_DIR, "config.json"), "r") as file:
         return json.load(file)["headless"]
 
-def get_model() -> str:
+def get_profile_path() -> str:
+    """Get the browser profile path."""
     with open(os.path.join(ROOT_DIR, "config.json"), "r") as file:
-        return json.load(file)["llm"]
-
-def get_twitter_language() -> str:
-    with open(os.path.join(ROOT_DIR, "config.json"), "r") as file:
-        return json.load(file)["twitter_language"]
+        return json.load(file)["profile_path"]
 
 def get_threads() -> int:
+    """Get the number of threads."""
     with open(os.path.join(ROOT_DIR, "config.json"), "r") as file:
         return json.load(file)["threads"]
-    
-def get_image_prompt_llm() -> str:
-    with open(os.path.join(ROOT_DIR, "config.json"), "r") as file:
-        return json.load(file)["image_prompt_llm"]
-
-def get_zip_url() -> str:
-    with open(os.path.join(ROOT_DIR, "config.json"), "r") as file:
-        return json.load(file)["zip_url"]
 
 def get_is_for_kids() -> bool:
+    """Get the is_for_kids setting."""
     with open(os.path.join(ROOT_DIR, "config.json"), "r") as file:
         return json.load(file)["is_for_kids"]
 
-def get_google_maps_scraper_zip_url() -> str:
+# Language and Localization
+def get_twitter_language() -> str:
+    """Get the Twitter language setting."""
     with open(os.path.join(ROOT_DIR, "config.json"), "r") as file:
-        return json.load(file)["google_maps_scraper"]
+        return json.load(file)["twitter_language"]
 
-def get_google_maps_scraper_niche() -> str:
+# URLs and Paths
+def get_zip_url() -> str:
+    """Get the zip URL."""
     with open(os.path.join(ROOT_DIR, "config.json"), "r") as file:
-        return json.load(file)["google_maps_scraper_niche"]
+        return json.load(file)["zip_url"]
 
-def get_scraper_timeout() -> int:
+def get_imagemagick_path() -> str:
+    """Get the ImageMagick path."""
     with open(os.path.join(ROOT_DIR, "config.json"), "r") as file:
-        return json.load(file)["scraper_timeout"] or 300
+        return json.load(file)["imagemagick_path"]
 
-def get_outreach_message_subject() -> str:
-    with open(os.path.join(ROOT_DIR, "config.json"), "r") as file:
-        return json.load(file)["outreach_message_subject"]
-    
-def get_outreach_message_body_file() -> str:
-    with open(os.path.join(ROOT_DIR, "config.json"), "r") as file:
-        return json.load(file)["outreach_message_body_file"]
-        
+# API Keys
 def get_gemini_api_key() -> str:
+    """Get the Gemini API key."""
     with open(os.path.join(ROOT_DIR, "config.json"), "r") as file:
         return json.load(file)["gemini_api_key"]
 
 def get_assemblyai_api_key() -> str:
+    """Get the AssemblyAI API key."""
     with open(os.path.join(ROOT_DIR, "config.json"), "r") as file:
         return json.load(file)["assembly_ai_api_key"]
-    
-def equalize_subtitles(srt_path: str, max_chars: int = 10) -> None:
-    srt_equalizer.equalize_srt_file(srt_path, srt_path, max_chars)
-    
-def get_font() -> str:
-    with open(os.path.join(ROOT_DIR, "config.json"), "r") as file:
-        return json.load(file)["font"]
 
-def get_fonts_dir() -> str:
-    return os.path.join(ROOT_DIR, "fonts")
-
-def get_imagemagick_path() -> str:
-    with open(os.path.join(ROOT_DIR, "config.json"), "r") as file:
-        return json.load(file)["imagemagick_path"]
-
-def get_tts_engine():
-    with open(os.path.join(ROOT_DIR, "config.json"), "r") as file:
-        return json.load(file)["tts_engine"]
-
-def get_tts_voice():
-    with open(os.path.join(ROOT_DIR, "config.json"), "r") as file:
-        return json.load(file)["tts_voice"]
-
-def get_image_gen() -> str:
-    with open(os.path.join(ROOT_DIR, "config.json"), "r") as file:
-        return json.load(file)["image_gen"]
-        
-def get_image_model() -> str:
-    with open(os.path.join(ROOT_DIR, "config.json"), "r") as file:
-        return json.load(file)["image_model"]
-        
-def get_elevenlabs_api_key():
+def get_elevenlabs_api_key() -> str:
+    """Get the ElevenLabs API key."""
     with open(os.path.join(ROOT_DIR, "config.json"), "r") as file:
         return json.load(file)["elevenlabs_api_key"]
 
-def get_openai_api_key():
-    with open(os.path.join(ROOT_DIR, "config.json"), "r") as file:
-        return json.load(file)["openai_api_key"]
-
-def get_local_tts_url():
-    with open(os.path.join(ROOT_DIR, "config.json"), "r") as file:
-        return json.load(file)["local_tts_url"]
-
 def get_openai_api_key() -> str:
+    """Get the OpenAI API key."""
     with open(os.path.join(ROOT_DIR, "config.json"), "r") as file:
         return json.load(file)["openai_api_key"]
 
 def get_stability_api_key() -> str:
+    """Get the Stability AI API key."""
     with open(os.path.join(ROOT_DIR, "config.json"), "r") as file:
         return json.load(file)["stability_api_key"]
 
-def get_leonardo_api_key() -> str:
+def get_segmind_api_key() -> str:
+    """Get the Segmind API key."""
     with open(os.path.join(ROOT_DIR, "config.json"), "r") as file:
-        return json.load(file)["leonardo_api_key"]
+        return json.load(file)["segmind_api_key"]
+
+# Text Generation
+def get_text_gen() -> str:
+    """Get the text generation service."""
+    with open(os.path.join(ROOT_DIR, "config.json"), "r") as file:
+        return json.load(file)["text_gen"]
+
+def get_text_gen_model() -> str:
+    """Get the text generation model."""
+    with open(os.path.join(ROOT_DIR, "config.json"), "r") as file:
+        return json.load(file)["text_gen_model"]
+
+# Image Generation
+def get_image_gen() -> str:
+    """Get the image generation service."""
+    with open(os.path.join(ROOT_DIR, "config.json"), "r") as file:
+        return json.load(file)["image_gen"]
+
+def get_image_model() -> str:
+    """Get the image generation model."""
+    with open(os.path.join(ROOT_DIR, "config.json"), "r") as file:
+        return json.load(file)["image_model"]
+
+# TTS (Text-to-Speech)
+def get_tts_engine() -> str:
+    """Get the TTS engine."""
+    with open(os.path.join(ROOT_DIR, "config.json"), "r") as file:
+        return json.load(file)["tts_engine"]
+
+def get_tts_voice() -> str:
+    """Get the TTS voice."""
+    with open(os.path.join(ROOT_DIR, "config.json"), "r") as file:
+        return json.load(file)["tts_voice"]
+
+# Subtitles and Display Settings
+def get_subtitles() -> bool:
+    """Get the subtitles setting."""
+    with open(os.path.join(ROOT_DIR, "config.json"), "r") as file:
+        return json.load(file)["subtitles"] == "true"
+
+def get_color() -> str:
+    """Get the text color."""
+    with open(os.path.join(ROOT_DIR, "config.json"), "r") as file:
+        return json.load(file)["color"]
+
+def get_highlight_bg() -> bool:
+    """Get the highlight background setting."""
+    with open(os.path.join(ROOT_DIR, "config.json"), "r") as file:
+        return json.load(file)["highlight_bg"] == "true"
+
+def get_bg_color() -> str:
+    """Get the background color."""
+    with open(os.path.join(ROOT_DIR, "config.json"), "r") as file:
+        return json.load(file)["bg_color"]
+
+def get_font() -> str:
+    """Get the font."""
+    with open(os.path.join(ROOT_DIR, "config.json"), "r") as file:
+        return json.load(file)["font"]
+
+def get_font_size() -> int:
+    """Get the font size."""
+    with open(os.path.join(ROOT_DIR, "config.json"), "r") as file:
+        return int(json.load(file)["font_size"])
+
+def get_max_chars() -> int:
+    """Get the maximum number of characters per line."""
+    with open(os.path.join(ROOT_DIR, "config.json"), "r") as file:
+        return int(json.load(file)["max_chars"])
+
+def get_max_lines() -> int:
+    """Get the maximum number of lines for subtitles."""
+    with open(os.path.join(ROOT_DIR, "config.json"), "r") as file:
+        return int(json.load(file)["max_lines"])
+
+def get_stroke_color() -> str:
+    """Get the stroke color."""
+    with open(os.path.join(ROOT_DIR, "config.json"), "r") as file:
+        return json.load(file)["stroke_color"]
+
+def get_stroke_width() -> int:
+    """Get the stroke width."""
+    with open(os.path.join(ROOT_DIR, "config.json"), "r") as file:
+        return int(json.load(file)["stroke_width"])
+
+# Additional Settings
+def get_auto_upload() -> str:
+    """Get the auto upload setting."""
+    with open(os.path.join(ROOT_DIR, "config.json"), "r") as file:
+        return json.load(file)["auto_upload"]
