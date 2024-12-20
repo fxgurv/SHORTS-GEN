@@ -8,12 +8,9 @@ from config import *
 from status import *
 from uuid import uuid4
 from constants import *
-from classes.Tts import TTS
 from termcolor import colored
-from Twitter import Twitter
 from YouTube import YouTube
 from prettytable import PrettyTable
-from Outreach import Outreach
 from AFM import AffiliateMarketing
 
 
