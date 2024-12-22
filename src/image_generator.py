@@ -1,10 +1,18 @@
-import requests
 import os
 import random
+import requests
 from utils import *
-from config import *
 from status import *
-from uuid import uuid4  # Import uuid4 for generating unique IDs
+from uuid import uuid4
+from config import (
+    ROOT_DIR,
+    get_image_gen,
+    get_image_model,
+    get_stability_api_key,
+    get_leonardo_api_key,
+    get_segmind_api_key
+)
+
 
 class ImageGenerator:
     def __init__(self):
